@@ -1,0 +1,33 @@
+	u (représentant speed) avec ux, uy et uz variables.
+	v (représentant le vecteur normale à l'horizontale) avec vx = 0, vy = 0 et vz = 1.
+
+	u.v = ||u||*||v||*cos(u;v)
+<=>	cos(u;v) = (u.v)/(||u||*||v||)
+<=>	u;v = arccos((u.v)/(||u||*||v||))
+
+	u.v = (ux * vx) + (uy * vy) + (uz * vz)
+	    = 0 + 0 + uz * 1
+	    = uz
+
+	||u|| = sqrt(ux^2 + uy^2 + uz^2)
+
+	||v|| = sqrt(0^2 + 0^2 + 1^2)
+	      = 1
+
+donc :	u;v = arccos(uz/sqrt(ux^2 + uy^2 + uz^2))
+
+On veut	le plus	petit angle positif : |u;v|
+Pour avoir l'angle avec le plan on fait : 90 - u;v. Car v est normal à l'horizontal. 
+
+Dans le programme :
+uz = speed.z
+sqrt(ux^2 + uy^2 + uz^2) = get_norm(speed)
+arccos = acos
+valeur absolue = ABS()
+acos renvoie le résultat en pi radian : x' degree = x pirad / pi * 180
+
+Donc la ligne de code correspondante est :
+
+***************************************************************
+*angle = 90 - ABS(acos(speed.z / get_norm(speed))) / pi * 180;*
+***************************************************************
