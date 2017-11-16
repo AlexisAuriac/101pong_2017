@@ -8,7 +8,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "include/101pong.h"
+#include "../include/my.h"
+#include "../include/101pong.h"
 
 static vector_t get_vector_coordinates(char **av)
 {
@@ -17,20 +18,21 @@ static vector_t get_vector_coordinates(char **av)
 	speed.x = atof(av[4]) - atof(av[1]);
 	speed.y	= atof(av[5]) - atof(av[2]);
 	speed.z	= atof(av[6]) - atof(av[3]);
-	printf("The speed vector coordinates are :\n");
+	my_putstr("The speed vector coordinates are :\n");
 	printf("(%.2f;%.2f;%.2f)\n", speed.x, speed.y, speed.z);
 	return (speed);
 }
 
 static vector_t get_pos_n(char **av, vector_t speed)
 {
-	vector_t pos_n;
+	vector_t pos_n = {atof(av[4]), atof(av[5]), atof(av[6])};
+	vector_t acc = {atof(av[8]), atof(av[9]), atof(av[10])};
 	int time = atoi(av[7]);
 
-	pos_n.x = atof(av[4]);
-	pos_n.y	= atof(av[5]);
-	pos_n.z	= atof(av[6]);
 	for (int i = 0 ; i < time ; i++) {
+		speed.x += acc.x;
+		speed.y	+= acc.y;
+		speed.z	+= acc.z;
 		pos_n.x += speed.x;
 		pos_n.y	+= speed.y;
 		pos_n.z	+= speed.z;
@@ -55,13 +57,14 @@ static double get_angle_incid(vector_t pos_1, vector_t pos_n, vector_t speed)
 	double angle = 0;
 	double const pi = 3.1415592654;
 
-	if ((speed.z > 0 && pos_1.z >= 0) || (speed.z < 0 && pos_1.z <= 0)) {
-		printf("The ball won't reach the bat.\n");
+	if ((pos_1.z > 0 && pos_n.z > 0) || (pos_1.z < 0 && pos_n.z < 0)) {
+		my_putstr("The ball won't reach the bat.\n");
 		return (-1);
-	} else {
+	}
+	else {
 		angle = 90 - ABS(acos(speed.z / get_norm(speed))) / pi * 180;
 		angle = ABS(angle);
-		printf("The incidence angle is :\n");
+		my_putstr("The incidence angle is :\n");
 		printf("%.2f degrees\n", angle);
 	}
 	return (angle);
@@ -69,15 +72,15 @@ static double get_angle_incid(vector_t pos_1, vector_t pos_n, vector_t speed)
 
 int main(int ac, char **av)
 {
-	vector_t speed;
-	vector_t pos_1;
-	vector_t pos_n;
+	vector_t speed = {0, 0, 0};
+	vector_t pos_1 = {0, 0, 0};
+	vector_t pos_n = {0, 0, 0};
 
-	if (ac != 8 || atof(av[7]) < 0)
-		return (84);
-	pos_1.x = atof(av[4]);
-	pos_1.y = atof(av[5]);
-	pos_1.z = atof(av[6]);
+	if (ac != 11 || atof(av[7]) < 0)
+		return (1);
+	pos_1.x = atoll(av[4]);
+	pos_1.y = atoll(av[5]);
+	pos_1.z = atoll(av[6]);
 	speed = get_vector_coordinates(av);
 	pos_n = get_pos_n(av, speed);
 	get_angle_incid(pos_1, pos_n, speed);

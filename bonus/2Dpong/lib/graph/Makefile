@@ -1,27 +1,25 @@
 ##
 ## EPITECH PROJECT, 2017
-## 101pong
+## libgraph.a
 ## File description:
-## Makefile for 101pong.
+## Makefile for libgraph.a.
 ##
 
-SRC	=	main.c
+SRC	=	$(wildcard *.c)
 
 OBJ	=	$(SRC:.c=.o)
 
-FLAGS	=	-Wall -Wextra -Werror
+LIB	=	libgraph.a
 
-NAME	=	101pong
+all	:	$(LIB)
 
-all	:	$(NAME)
-
-$(NAME)	:	$(OBJ)
-		gcc -o $(NAME) $(OBJ) -lm
+$(LIB)	:	$(OBJ)
+		ar rc $(LIB) $(OBJ)
 
 clean	:
 		rm -f *~ *#* $(OBJ)
 
-fclean	:	clean
+fclean :	clean
 		rm -f $(NAME)
 
 re	:	fclean	all
