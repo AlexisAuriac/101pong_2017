@@ -52,13 +52,12 @@ static double get_norm(vector_t vector)
 
 static double get_angle_incid(vector_t pos_1, vector_t pos_n, vector_t speed)
 {
-	double angle = 0;
+	double angle = -1;
 	double const pi = 3.1415592654;
 
-	if ((speed.z > 0 && pos_1.z >= 0) || (speed.z < 0 && pos_1.z <= 0)) {
+	if ((speed.z >= 0 && pos_1.z > 0) || (speed.z <= 0 && pos_1.z < 0))
 		printf("The ball won't reach the bat.\n");
-		return (-1);
-	} else {
+	else {
 		angle = 90 - ABS(acos(speed.z / get_norm(speed))) / pi * 180;
 		angle = ABS(angle);
 		printf("The incidence angle is :\n");
@@ -73,7 +72,7 @@ int main(int ac, char **av)
 	vector_t pos_1;
 	vector_t pos_n;
 
-	if (ac != 8 || atof(av[7]) < 0)
+	if (my_paramerror(ac, av) == 84)
 		return (84);
 	pos_1.x = atof(av[4]);
 	pos_1.y = atof(av[5]);

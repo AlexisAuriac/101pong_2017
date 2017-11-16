@@ -5,7 +5,8 @@
 ## Makefile for 101pong.
 ##
 
-SRC	=	main.c
+SRC	=	main.c		\
+		my_error.c
 
 OBJ	=	$(SRC:.c=.o)
 
