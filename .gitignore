@@ -1,0 +1,5 @@
+*.o
+*.a
+*.sublime-workspace
+*.sublime-project
+101pong
