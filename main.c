@@ -24,7 +24,7 @@ static vector_t get_vector_coordinates(char **av)
 
 static vector_t get_pos_n(char **av, vector_t speed)
 {
-	vector_t pos_n;
+	vector_t pos_n = {0, 0};
 	int time = atoi(av[7]);
 
 	pos_n.x = atof(av[4]);

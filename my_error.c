@@ -8,6 +8,7 @@
 int my_paramerror(int ac, char **str)
 {
 	int j = 0;
+
 	if (ac != 8)
 		return (84);
 	while (str[7][j] != '\0') {
@@ -17,4 +18,3 @@ int my_paramerror(int ac, char **str)
 	}
 	return (0);
 }
-
